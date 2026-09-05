@@ -250,7 +250,7 @@ For Power BI: open Power BI Desktop → import the 9 CSVs from
 
 ## Screenshots
 
-![Power BI Dashboard](powerbi/screenshots/dashboard_overview.png)
+![Power BI Dashboard](powerbi/screenshots/powerbi/screenshots/dashboard.png.png)
 
 None yet — see the note above under **Dashboard (Power BI)**. Once built,
 screenshots belong in `powerbi/screenshots/` (see that folder's README
