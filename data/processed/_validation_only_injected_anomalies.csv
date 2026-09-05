@@ -1,0 +1,148 @@
+building_id,date,severity_multiplier,likely_cause
+B001,2023-07-09,2.69,Equipment left running
+B001,2024-06-02,2.28,Equipment left running
+B002,2022-09-27,2.69,Unplanned high load event
+B002,2021-11-24,1.9,Equipment left running
+B002,2023-12-09,2.02,Unplanned high load event
+B003,2024-12-10,1.66,Equipment left running
+B003,2020-05-11,2.51,Equipment left running
+B003,2023-10-20,2.34,Equipment left running
+B004,2021-12-30,2.27,Unplanned high load event
+B004,2021-09-12,2.71,Equipment left running
+B005,2022-02-13,1.87,HVAC fault suspected
+B005,2021-02-24,2.43,Unplanned high load event
+B005,2023-12-01,2.75,HVAC fault suspected
+B006,2020-08-07,1.63,HVAC fault suspected
+B006,2021-10-27,2.77,Equipment left running
+B006,2023-04-26,1.64,Equipment left running
+B006,2021-06-22,2.08,Equipment left running
+B007,2021-01-16,1.74,Unplanned high load event
+B007,2021-06-07,2.59,Equipment left running
+B008,2020-06-13,1.98,Equipment left running
+B008,2024-04-06,2.08,Unplanned high load event
+B009,2022-04-26,1.69,Unplanned high load event
+B009,2022-04-02,2.29,Equipment left running
+B010,2022-03-21,2.04,Unplanned high load event
+B010,2023-01-16,2.27,Equipment left running
+B010,2020-04-12,1.96,HVAC fault suspected
+B010,2022-09-22,2.33,Equipment left running
+B011,2020-11-08,2.02,Equipment left running
+B011,2024-08-10,2.1,HVAC fault suspected
+B011,2021-06-05,2.73,Equipment left running
+B012,2024-02-19,1.84,Equipment left running
+B012,2020-03-05,2.65,HVAC fault suspected
+B012,2021-06-06,2.02,HVAC fault suspected
+B012,2020-04-03,2.64,Unplanned high load event
+B013,2020-07-28,2.4,HVAC fault suspected
+B013,2024-02-19,2.69,Equipment left running
+B013,2022-06-07,1.77,HVAC fault suspected
+B014,2024-11-15,2.6,Equipment left running
+B014,2020-04-23,1.79,Unplanned high load event
+B015,2021-11-03,2.5,HVAC fault suspected
+B015,2024-05-27,2.58,Unplanned high load event
+B016,2020-02-05,2.69,Equipment left running
+B016,2022-07-17,1.67,Equipment left running
+B016,2021-06-25,2.79,HVAC fault suspected
+B017,2022-03-08,1.91,Unplanned high load event
+B017,2022-08-10,2.75,HVAC fault suspected
+B018,2020-05-26,2.71,HVAC fault suspected
+B018,2024-11-01,2.3,Equipment left running
+B018,2021-04-19,2.33,HVAC fault suspected
+B018,2021-04-30,1.69,Equipment left running
+B019,2020-04-26,1.74,Unplanned high load event
+B019,2023-06-13,2.48,Equipment left running
+B019,2022-01-06,2.43,Equipment left running
+B020,2020-12-25,2.12,Unplanned high load event
+B020,2021-06-25,1.66,Equipment left running
+B020,2024-09-27,2.73,Unplanned high load event
+B021,2020-09-04,2.02,HVAC fault suspected
+B021,2021-09-21,2.55,Unplanned high load event
+B022,2024-09-30,1.84,HVAC fault suspected
+B022,2024-10-16,2.74,Unplanned high load event
+B023,2023-05-21,2.04,HVAC fault suspected
+B023,2022-03-31,2.48,HVAC fault suspected
+B023,2020-07-30,2.73,HVAC fault suspected
+B023,2024-12-01,2.1,HVAC fault suspected
+B024,2020-12-07,1.74,HVAC fault suspected
+B024,2020-02-02,2.49,Equipment left running
+B024,2021-03-10,2.34,Equipment left running
+B024,2023-12-24,2.7,HVAC fault suspected
+B025,2021-01-29,1.69,HVAC fault suspected
+B025,2022-06-01,2.66,Equipment left running
+B025,2023-12-25,1.77,HVAC fault suspected
+B026,2024-06-27,2.2,Unplanned high load event
+B026,2023-08-07,1.95,Equipment left running
+B026,2024-01-10,2.66,HVAC fault suspected
+B026,2021-04-21,2.11,Equipment left running
+B027,2021-01-10,2.29,Equipment left running
+B027,2024-03-18,1.87,Equipment left running
+B028,2021-02-24,2.75,Unplanned high load event
+B028,2020-05-29,2.1,Equipment left running
+B029,2023-05-10,1.64,Unplanned high load event
+B029,2022-07-23,1.65,Unplanned high load event
+B030,2024-09-20,2.65,Equipment left running
+B030,2023-04-10,2.45,Equipment left running
+B030,2023-08-20,2.06,Unplanned high load event
+B030,2021-04-06,2.25,Unplanned high load event
+B031,2023-04-28,2.02,HVAC fault suspected
+B031,2020-07-14,2.43,HVAC fault suspected
+B032,2023-04-08,2.11,HVAC fault suspected
+B032,2024-10-25,2.07,Unplanned high load event
+B033,2024-05-02,1.71,HVAC fault suspected
+B033,2020-01-22,1.7,HVAC fault suspected
+B034,2023-04-22,2.42,Unplanned high load event
+B034,2020-12-10,1.65,Unplanned high load event
+B035,2020-05-02,2.54,Unplanned high load event
+B035,2020-04-05,1.82,Unplanned high load event
+B035,2024-06-22,1.78,HVAC fault suspected
+B035,2022-01-25,2.26,Unplanned high load event
+B036,2024-01-08,2.32,HVAC fault suspected
+B036,2022-08-24,1.63,HVAC fault suspected
+B036,2022-01-29,2.38,Unplanned high load event
+B037,2023-07-06,2.57,Unplanned high load event
+B037,2022-10-27,2.26,HVAC fault suspected
+B038,2022-10-16,1.87,HVAC fault suspected
+B038,2020-01-02,1.65,Unplanned high load event
+B038,2022-06-24,2.04,Equipment left running
+B039,2021-12-11,2.74,HVAC fault suspected
+B039,2021-11-18,2.77,Equipment left running
+B039,2022-07-25,2.73,Unplanned high load event
+B040,2020-05-20,2.69,HVAC fault suspected
+B040,2022-11-07,2.49,Equipment left running
+B040,2020-01-08,2.62,Equipment left running
+B041,2020-05-25,2.33,Equipment left running
+B041,2020-11-14,1.63,HVAC fault suspected
+B041,2023-10-18,2.42,HVAC fault suspected
+B042,2021-05-26,1.63,Equipment left running
+B042,2020-12-06,1.72,Equipment left running
+B042,2022-01-23,2.28,Unplanned high load event
+B043,2021-12-06,2.33,Unplanned high load event
+B043,2022-03-24,2.1,Unplanned high load event
+B043,2023-03-30,2.19,Equipment left running
+B043,2020-08-11,1.97,HVAC fault suspected
+B044,2022-12-18,2.24,Unplanned high load event
+B044,2022-10-05,2.59,Unplanned high load event
+B044,2020-07-24,1.72,HVAC fault suspected
+B044,2023-04-16,2.13,Equipment left running
+B045,2024-11-04,1.66,Unplanned high load event
+B045,2020-02-12,2.31,HVAC fault suspected
+B045,2022-06-26,2.68,Equipment left running
+B046,2021-05-15,2.45,Unplanned high load event
+B046,2024-07-24,2.27,HVAC fault suspected
+B046,2023-07-20,1.76,Unplanned high load event
+B046,2023-01-29,2.38,HVAC fault suspected
+B047,2020-06-09,2.27,Unplanned high load event
+B047,2022-02-10,1.85,HVAC fault suspected
+B047,2021-03-31,1.72,Unplanned high load event
+B047,2020-05-11,2.43,Equipment left running
+B048,2022-12-07,1.97,HVAC fault suspected
+B048,2021-08-29,2.51,HVAC fault suspected
+B048,2023-07-18,2.33,Unplanned high load event
+B049,2024-12-28,1.66,Equipment left running
+B049,2024-04-04,2.14,Unplanned high load event
+B049,2021-04-17,2.58,HVAC fault suspected
+B049,2022-09-19,2.44,Unplanned high load event
+B050,2022-09-07,1.78,HVAC fault suspected
+B050,2022-03-18,1.94,HVAC fault suspected
+B050,2022-06-19,1.74,Equipment left running
+B050,2020-12-27,2.68,Equipment left running

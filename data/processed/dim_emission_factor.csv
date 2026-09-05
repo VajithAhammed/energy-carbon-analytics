@@ -1,0 +1,16 @@
+energy_source,emission_factor,effective_date
+Grid Electricity,0.42,2020-01-01
+Natural Gas,0.181,2020-01-01
+Renewable,0.0,2020-01-01
+Grid Electricity,0.408,2021-01-01
+Natural Gas,0.181,2021-01-01
+Renewable,0.0,2021-01-01
+Grid Electricity,0.396,2022-01-01
+Natural Gas,0.181,2022-01-01
+Renewable,0.0,2022-01-01
+Grid Electricity,0.384,2023-01-01
+Natural Gas,0.181,2023-01-01
+Renewable,0.0,2023-01-01
+Grid Electricity,0.372,2024-01-01
+Natural Gas,0.181,2024-01-01
+Renewable,0.0,2024-01-01

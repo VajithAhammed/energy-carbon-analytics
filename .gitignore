@@ -1,0 +1,43 @@
+# ============================================================================
+# Trained models -- NOT committed on purpose, not an oversight.
+#
+# models/energy_demand_model.joblib and carbon_emissions_model.joblib are
+# 171MB and 174MB respectively (200-tree Random Forests, max_depth=14, on
+# ~72K training rows). GitHub HARD-BLOCKS any single file over 100MB from
+# being pushed via normal git -- committing these as-is would break `git
+# push` outright, not just bloat the repo.
+#
+# Regenerate them by running notebooks/04_energy_forecasting.ipynb and
+# 05_carbon_prediction.ipynb (fully deterministic -- random_state=42
+# throughout -- so you'll get byte-for-byte the same model). The much
+# smaller anomaly_detection_model.joblib (2.7MB, a single-feature
+# Isolation Forest) IS committed, since it's well under any size concern.
+#
+# If you want the large models version-controlled anyway, use Git LFS
+# (`git lfs track "models/*.joblib"`) rather than removing this rule.
+# ============================================================================
+models/energy_demand_model.joblib
+models/carbon_emissions_model.joblib
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+*.egg-info/
+.pytest_cache/
+
+# Environments
+.venv/
+venv/
+env/
+.env
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Jupyter
+.jupyter/

@@ -1,0 +1,51 @@
+building_id,building_name,building_type,city,floor_area_sqft,floors,year_built,occupancy_capacity,has_solar
+B001,Seattle Warehouse 001,Warehouse,Seattle,266063,12,1995,1357,False
+B002,Seattle Warehouse 002,Warehouse,Seattle,90747,5,2011,373,False
+B003,Phoenix School 003,School,Phoenix,116512,7,2012,424,True
+B004,Chicago Warehouse 004,Warehouse,Chicago,241941,14,2004,701,False
+B005,Seattle Warehouse 005,Warehouse,Seattle,172013,13,1983,834,False
+B006,Chicago School 006,School,Chicago,98873,5,2019,380,True
+B007,Seattle Office 007,Office,Seattle,87650,4,1996,344,False
+B008,New York School 008,School,New York,174838,7,1989,711,True
+B009,Seattle School 009,School,Seattle,79986,6,1981,254,False
+B010,Chicago School 010,School,Chicago,118837,6,2010,583,True
+B011,Seattle School 011,School,Seattle,134785,6,1996,468,False
+B012,Seattle Hospital 012,Hospital,Seattle,89861,5,1988,415,False
+B013,New York Warehouse 013,Warehouse,New York,73992,4,1985,321,False
+B014,Phoenix Hospital 014,Hospital,Phoenix,292580,16,2011,918,True
+B015,New York Office 015,Office,New York,191695,10,1979,924,False
+B016,Phoenix Office 016,Office,Phoenix,133692,7,2007,578,False
+B017,Atlanta Retail 017,Retail,Atlanta,27390,1,1979,81,False
+B018,Seattle Office 018,Office,Seattle,203537,9,2019,793,True
+B019,Phoenix Office 019,Office,Phoenix,135713,9,2016,584,False
+B020,Phoenix Office 020,Office,Phoenix,199289,9,2014,786,False
+B021,New York Hospital 021,Hospital,New York,107022,6,2004,572,False
+B022,Seattle Retail 022,Retail,Seattle,25857,1,1981,123,False
+B023,Phoenix Hospital 023,Hospital,Phoenix,269092,21,1990,784,False
+B024,New York Warehouse 024,Warehouse,New York,176797,9,1978,520,False
+B025,Atlanta Retail 025,Retail,Atlanta,49814,2,1987,195,True
+B026,New York Warehouse 026,Warehouse,New York,93659,4,2016,471,False
+B027,Chicago Office 027,Office,Chicago,192668,8,2005,971,False
+B028,Chicago Office 028,Office,Chicago,156519,9,1976,487,False
+B029,Chicago Retail 029,Retail,Chicago,45546,2,2018,203,False
+B030,Phoenix Office 030,Office,Phoenix,131370,5,1977,396,False
+B031,Chicago Warehouse 031,Warehouse,Chicago,184526,11,2016,592,False
+B032,Atlanta Retail 032,Retail,Atlanta,93412,6,1979,275,True
+B033,New York Office 033,Office,New York,72189,5,2013,256,False
+B034,Chicago Office 034,Office,Chicago,203255,8,1989,766,True
+B035,New York Office 035,Office,New York,67682,3,1985,337,False
+B036,Seattle School 036,School,Seattle,79966,3,2001,265,False
+B037,Phoenix Office 037,Office,Phoenix,234788,13,1980,1015,False
+B038,Chicago School 038,School,Chicago,92966,3,2018,504,False
+B039,Atlanta School 039,School,Atlanta,71050,4,1979,206,False
+B040,Seattle Mixed-Use 040,Mixed-Use,Seattle,100107,4,2012,546,True
+B041,Chicago Warehouse 041,Warehouse,Chicago,115833,6,2011,409,False
+B042,Chicago School 042,School,Chicago,106127,6,1993,364,False
+B043,Phoenix Retail 043,Retail,Phoenix,39849,1,1986,124,True
+B044,Phoenix Office 044,Office,Phoenix,70696,3,2002,303,True
+B045,Phoenix Mixed-Use 045,Mixed-Use,Phoenix,72708,5,1982,364,True
+B046,New York Office 046,Office,New York,51210,2,1983,173,False
+B047,Atlanta Retail 047,Retail,Atlanta,106875,4,1998,570,True
+B048,Chicago Office 048,Office,Chicago,159958,9,1986,849,False
+B049,Atlanta Hospital 049,Hospital,Atlanta,346706,27,1979,1028,True
+B050,Atlanta Warehouse 050,Warehouse,Atlanta,295096,13,2016,944,False

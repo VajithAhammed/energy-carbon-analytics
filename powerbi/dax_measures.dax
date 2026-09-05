@@ -1,0 +1,242 @@
+// ============================================================================
+// dax_measures.dax
+// Energy Consumption & Carbon Analytics
+//
+// Copy each measure into Power BI: right-click fact_energy in the Fields
+// pane -> New Measure -> paste the formula, rename to match the header.
+// Grouped by category to match reports/model_results.md and the EDA
+// notebook's business questions -- not an arbitrary list.
+// ============================================================================
+
+// ---------------------------------------------------------------------------
+// ENERGY
+// ---------------------------------------------------------------------------
+
+// Total Energy (kWh)
+// What: portfolio-wide electricity + gas for whatever is in filter context.
+// Why: the single number every other energy KPI card derives from.
+Total Energy =
+SUM(fact_energy[electricity_kwh]) + SUM(fact_energy[natural_gas_kwh])
+
+// Average Daily Consumption (kWh)
+// Why: total ÷ distinct days avoids overcounting when a visual spans
+// multiple buildings (COUNTROWS would count building-days, not days).
+Average Daily Consumption =
+DIVIDE([Total Energy], DISTINCTCOUNT(fact_energy[date]))
+
+// Peak Demand (kW)
+// Why: MAX, not AVERAGE -- demand charges bill on the single highest
+// moment in a period, not the typical one (see cost measures below).
+Peak Demand (kW) =
+MAX(fact_energy[peak_demand_kw])
+
+// Energy Intensity (EUI, kWh/sqft)
+// Why: controls for building size so a large building isn't
+// mistaken for an inefficient one -- same distinction made in
+// 02_eda.ipynb Section 3.
+Energy Intensity =
+DIVIDE([Total Energy], SUM(dim_building[floor_area_sqft]))
+
+// YoY Energy Growth
+// Why: SAMEPERIODLASTYEAR is a genuine time-intelligence win here --
+// the manual alternative (self-join on year-1) is exactly what this
+// function exists to replace.
+YoY Energy Growth =
+VAR CurrentTotal = [Total Energy]
+VAR PriorYearTotal = CALCULATE([Total Energy], SAMEPERIODLASTYEAR(dim_date[date]))
+RETURN DIVIDE(CurrentTotal - PriorYearTotal, PriorYearTotal)
+
+// MoM Energy Growth
+MoM Energy Growth =
+VAR CurrentTotal = [Total Energy]
+VAR PriorMonthTotal = CALCULATE([Total Energy], DATEADD(dim_date[date], -1, MONTH))
+RETURN DIVIDE(CurrentTotal - PriorMonthTotal, PriorMonthTotal)
+
+// ---------------------------------------------------------------------------
+// CARBON
+// ---------------------------------------------------------------------------
+
+// Total Carbon (kg CO2e)
+// What: grid-purchased electricity (electricity_kwh - renewable_kwh, per
+// the convention in data/README.md) x that YEAR's grid factor, plus gas x
+// gas factor. renewable_kwh's own factor is 0 and drops out naturally.
+// Why LOOKUPVALUE instead of a relationship: the correct factor depends
+// on BOTH energy_source and year, which doesn't fit a clean 1:many
+// relationship -- see powerbi/README.md's data model section.
+// Alternative considered: a calculated column instead of a measure.
+// Rejected -- a measure recalculates correctly under any filter context
+// (a specific building, a date range, a slicer); a calculated column
+// would need re-materializing and is the wrong tool for a value that's
+// always aggregated, never inspected row-by-row.
+Total Carbon (kg CO2e) =
+SUMX(
+    fact_energy,
+    (fact_energy[electricity_kwh] - fact_energy[renewable_kwh])
+        * LOOKUPVALUE(
+            dim_emission_factor[emission_factor],
+            dim_emission_factor[energy_source], "Grid Electricity",
+            dim_emission_factor[effective_date], DATE(YEAR(fact_energy[date]), 1, 1)
+        )
+    + fact_energy[natural_gas_kwh]
+        * LOOKUPVALUE(
+            dim_emission_factor[emission_factor],
+            dim_emission_factor[energy_source], "Natural Gas",
+            dim_emission_factor[effective_date], DATE(YEAR(fact_energy[date]), 1, 1)
+        )
+)
+
+// Carbon Intensity (kg CO2e/sqft)
+Carbon Intensity =
+DIVIDE([Total Carbon (kg CO2e)], SUM(dim_building[floor_area_sqft]))
+
+// Total Carbon - Electricity (kg CO2e)
+// What: the electricity term split out from Total Carbon (kg CO2e) --
+// used by the Page 3 "emissions by source" donut, which needs the two
+// components as separate measures, not one combined total.
+// Why not just filter Total Carbon by a source column: fact_energy has
+// no energy_source column (electricity and gas are separate columns on
+// the same row, not separate rows) -- splitting requires two measures,
+// each summing its own term.
+Total Carbon - Electricity (kg CO2e) =
+SUMX(
+    fact_energy,
+    (fact_energy[electricity_kwh] - fact_energy[renewable_kwh])
+        * LOOKUPVALUE(
+            dim_emission_factor[emission_factor],
+            dim_emission_factor[energy_source], "Grid Electricity",
+            dim_emission_factor[effective_date], DATE(YEAR(fact_energy[date]), 1, 1)
+        )
+)
+
+// Total Carbon - Gas (kg CO2e)
+Total Carbon - Gas (kg CO2e) =
+SUMX(
+    fact_energy,
+    fact_energy[natural_gas_kwh]
+        * LOOKUPVALUE(
+            dim_emission_factor[emission_factor],
+            dim_emission_factor[energy_source], "Natural Gas",
+            dim_emission_factor[effective_date], DATE(YEAR(fact_energy[date]), 1, 1)
+        )
+)
+// Sanity check: [Total Carbon - Electricity] + [Total Carbon - Gas] must
+// always equal [Total Carbon (kg CO2e)] exactly -- if they ever diverge,
+// one of the three measures has a bug.
+
+// Renewable %
+// What: on-site solar generation as a share of total electricity use.
+// Why this reads correctly: renewable_kwh is a SUBSET of electricity_kwh
+// (see data/README.md), so this is a true share, not double-counted.
+Renewable % =
+DIVIDE(SUM(fact_energy[renewable_kwh]), SUM(fact_energy[electricity_kwh]))
+
+// Estimated CO2 Avoided by Renewables (kg CO2e)
+// What: the emissions that WOULD have occurred if renewable_kwh had
+// instead been grid electricity -- i.e., renewable_kwh x that year's
+// grid factor (renewable itself has a 0 factor, so this is the actual
+// avoided amount, not a double-count against Total Carbon above).
+Estimated CO2 Avoided by Renewables (kg CO2e) =
+SUMX(
+    fact_energy,
+    fact_energy[renewable_kwh]
+        * LOOKUPVALUE(
+            dim_emission_factor[emission_factor],
+            dim_emission_factor[energy_source], "Grid Electricity",
+            dim_emission_factor[effective_date], DATE(YEAR(fact_energy[date]), 1, 1)
+        )
+)
+
+// ---------------------------------------------------------------------------
+// COST
+// ---------------------------------------------------------------------------
+
+// Total Energy Cost ($, excludes demand charge)
+// Why LOOKUPVALUE keyed to month start, not a relationship: fact_energy
+// is DAILY grain, fact_energy_cost is MONTHLY grain (see data/README.md)
+// -- a plain relationship can't join daily rows to a monthly rate table
+// without first truncating the date, which is exactly what this does.
+Total Energy Cost =
+SUMX(
+    fact_energy,
+    fact_energy[electricity_kwh]
+        * LOOKUPVALUE(
+            fact_energy_cost[electricity_price],
+            fact_energy_cost[building_id], fact_energy[building_id],
+            fact_energy_cost[month_start], DATE(YEAR(fact_energy[date]), MONTH(fact_energy[date]), 1)
+        )
+    + fact_energy[natural_gas_kwh]
+        * LOOKUPVALUE(
+            fact_energy_cost[gas_price],
+            fact_energy_cost[building_id], fact_energy[building_id],
+            fact_energy_cost[month_start], DATE(YEAR(fact_energy[date]), MONTH(fact_energy[date]), 1)
+        )
+)
+
+// Total Demand Cost ($)
+// Why SUMMARIZE, not a row-by-row SUMX like the measure above: a demand
+// charge bills ONCE per building-month against that month's peak kW --
+// applying it per DAY (like the energy cost above) would wildly
+// overcount it. This groups to building-month first, exactly matching
+// build_monthly_cost_table()'s grain in src/feature_engineering.py.
+Total Demand Cost =
+SUMX(
+    SUMMARIZE(
+        fact_energy,
+        fact_energy[building_id],
+        "Yr", YEAR(fact_energy[date]), "Mo", MONTH(fact_energy[date]),
+        "PeakKW", MAX(fact_energy[peak_demand_kw])
+    ),
+    [PeakKW] * LOOKUPVALUE(
+        fact_energy_cost[demand_charge],
+        fact_energy_cost[building_id], [building_id],
+        fact_energy_cost[month_start], DATE([Yr], [Mo], 1)
+    )
+)
+
+// Total Cost ($)
+Total Cost =
+[Total Energy Cost] + [Total Demand Cost]
+
+// Cost per Sqft
+Cost per Sqft =
+DIVIDE([Total Cost], SUM(dim_building[floor_area_sqft]))
+
+// ---------------------------------------------------------------------------
+// SCENARIO (Page 6 -- requires the What-if parameters, see powerbi/README.md)
+// ---------------------------------------------------------------------------
+
+// Estimated Energy Savings (kWh)
+// Why a simple linear scale, stated as a limitation: a uniform X%
+// reduction across every building/day is a simplification -- real
+// savings depend on WHERE the reduction comes from (baseload vs
+// weather-driven load reduce differently). Labeled "Estimated" per the
+// project brief's explicit instruction never to present scenario output
+// as guaranteed.
+Estimated Energy Savings (kWh) =
+[Total Energy] * 'Energy Reduction %'[Energy Reduction % Value]
+
+// Estimated Cost Savings ($)
+// Same linear-scale caveat -- also doesn't separately reduce the demand
+// charge component (a 10% average-load cut doesn't guarantee a 10% peak
+// cut), which is a real limitation worth stating out loud, not hiding.
+Estimated Cost Savings =
+[Total Cost] * 'Energy Reduction %'[Energy Reduction % Value]
+
+// Estimated CO2 Avoided (kg CO2e)
+Estimated CO2 Avoided =
+[Total Carbon (kg CO2e)] * 'Energy Reduction %'[Energy Reduction % Value]
+
+// Estimated Additional CO2 Avoided from Renewable Increase (kg CO2e)
+// What: models shifting an additional X percentage points of grid
+// electricity to renewables. Multiplies that shifted volume by the
+// CURRENT year's grid factor (renewables displace grid purchases 1:1
+// at zero emissions).
+Estimated Additional CO2 Avoided from Renewable Increase =
+VAR ShiftedKWh = SUM(fact_energy[electricity_kwh]) * 'Renewable Increase %'[Renewable Increase % Value]
+VAR CurrentGridFactor =
+    LOOKUPVALUE(
+        dim_emission_factor[emission_factor],
+        dim_emission_factor[energy_source], "Grid Electricity",
+        dim_emission_factor[effective_date], DATE(2024, 1, 1)
+    )
+RETURN ShiftedKWh * CurrentGridFactor
